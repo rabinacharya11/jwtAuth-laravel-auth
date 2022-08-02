@@ -1,7 +1,7 @@
 # Getting started
  This is the auth system build with laravel and JWT
 
-here are few of the projects
+here are few images of the projects
 
 <img width="1039" alt="Screen Shot 2022-08-02 at 19 59 38" src="https://user-images.githubusercontent.com/72679799/182397228-f52ae3fc-77a2-45a3-bbe7-787cbca20bf3.png">
 
