@@ -49,17 +49,20 @@ class AuthController extends Controller
     }
 
     public function register(Request $req){
-
+$validator =  Validator::make($req->all(), ['email'=>'required|string|email|unique:users', 'password'=>'required|min:8','name'=>'required|min:3']);
+if($validator->fails()){
+    return response()->json($validator->errors()->toJson(),401);
+}
 
 
         User::create(array_merge($req->all(), ['password'=>bcrypt($req->password)]));
-        return 'hello';
+        return response()->json(['message'=>'User Registration Successful.']) ;
     }
 
     public function me()
     {
-       echo Auth::user();
-        // return response()->json(auth()->user());
+     return Auth::user();
+
     }
 
     /**
