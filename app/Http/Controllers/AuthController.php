@@ -19,6 +19,7 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api', ['except' => ['login','register']]);
+        // users can access these routes without authentication
     }
 
 
@@ -30,7 +31,7 @@ class AuthController extends Controller
      */
 
 
-
+// LOGIN: Logins user in with the email and password and return the token
     public function login(Request $request)
 
     {
@@ -47,6 +48,7 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
+    // REGISTERs the new user with email and password
     public function register(Request $req){
 $validator =  Validator::make($req->all(), ['email'=>'required|string|email|unique:users', 'password'=>'required|min:8','name'=>'required|min:3']);
 if($validator->fails()){
@@ -58,6 +60,8 @@ if($validator->fails()){
         return response()->json(['message'=>'User Registration Successful.']) ;
     }
 
+
+    // get the currently logged in user
     public function me()
     {
      return Auth::user();
@@ -69,19 +73,21 @@ if($validator->fails()){
      *
      * @return \Illuminate\Http\JsonResponse
      */
+
+    //  logouts user with token
     public function logout()
     {
         auth()->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
     }
-
+// refresh the token and returns the new token
     public function refresh()
     {
         return $this->respondWithToken(Auth::refresh());
     }
 
-
+// gets the token
     protected function respondWithToken($token)
     {
         return response()->json([
